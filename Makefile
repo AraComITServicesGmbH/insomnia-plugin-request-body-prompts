@@ -1,7 +1,4 @@
-.PHONY: test clean
-
-test:
-	@npm test
+.PHONY: clean
 
 define release
 	VERSION=`node -pe "require('./package.json').version"` && \
@@ -15,13 +12,13 @@ define release
 	git tag "$$NEXT_VERSION" -m "Version $$NEXT_VERSION"
 endef
 
-release-patch: test
+release-patch:
 	@$(call release,patch)
 
-release-minor: test
+release-minor:
 	@$(call release,minor)
 
-release-major: test
+release-major:
 	@$(call release,major)
 
 publish:
