@@ -1,0 +1,31 @@
+{
+  "name": "insomnia-plugin-request-body-prompts",
+  "version": "1.0.0",
+  "description": "Prompt users for variables in your Insomnia request body (e.g. <<prompt:Question:default>>) before sending. Supports default values, and cancels on dialog abort.",
+  "main": "index.js",
+  "insomnia": {
+    "name": "request-body-prompts",
+    "displayName": "Request Body Prompts",
+    "description": "Prompt for variables in the request body using <<prompt:Your question[:default value]>> before sending a request.",
+    "icon": "./images/icon.svg"
+  },
+  "keywords": [
+    "insomnia",
+    "insomnia-plugin",
+    "request-body-prompts",
+    "request-body",
+    "prompts",
+    "variables",
+    "input"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AraComITServicesGmbH/insomnia-plugin-request-body-prompts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AraComITServicesGmbH/insomnia-plugin-request-body-prompts/issues"
+  },
+  "homepage": "https://github.com/AraComITServicesGmbH/insomnia-plugin-request-body-prompts#readme",
+  "author": "Christian Ego <Christian.Ego@aracom.de>",
+  "license": "MIT"
+}
