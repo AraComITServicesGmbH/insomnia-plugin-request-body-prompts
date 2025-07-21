@@ -4,9 +4,12 @@ Prompt users for variables in your Insomnia request body before sending a reques
 
 ## Features
 
-- Define variables in your request body using the pattern `<<prompt:Your question here:defaultValue>>`
-- Before sending the request, a dialog appears for each unique prompt, allowing you to input values
-- All prompt variables in the body are replaced by your answers before the request is actually sent
+- Define prompt variables in your request body using the attribute pattern  
+  `<<prompt question='Your question' type='type' default='value' nullable='true'>>`
+- Supports types (`number`, `boolean`, `string`) and nullability
+- Shows a dialog before sending, allowing input per prompt (with defaults)
+- All prompt variables in the body are replaced by your answers before the request is sent
+
 
 ## Installation
 
@@ -19,30 +22,27 @@ Prompt users for variables in your Insomnia request body before sending a reques
 
 ### Set the Request Body
 
-In your request body (e.g., JSON or raw text), insert variables using double angle brackets and the word `prompt`:
+In your request body (e.g., JSON or raw text), insert variables using the prompt tag:
 
 ```json
 {
-  "username": "<<prompt:Enter username>>",
-  "password": "<<prompt:Enter your password>>"
+  "amount": "<<prompt question='Enter amount' type='number' default='42'>>",
+  "active": "<<prompt question='Is active?' type='boolean' default='true'>>",
+  "description": "<<prompt question='Description' nullable='true'>>"
 }
 ```
 
-### Default Values
-You can provide a default value for each prompt by adding a colon and the value:
+**Attributes:**
+- `question` (required): Text shown in the dialog
+- `type`: `"string"` (default), `"number"`, or `"boolean"`
+- `default`: Default value pre-filled in the dialog (optional)
+- `nullable`: `"true"` or `"1"` (optional) — allows null/empty answers
 
-```json
-{
-  "username": "<<prompt:Enter username:john_doe>>",
-  "apiKey": "<<prompt:API Key:sk-123456>>",
-  "note": "<<prompt:Any note here>>"
-}
-```
-The text before the first colon is the question shown in the dialog.
-
-The text after the colon is the default value, which is pre-filled in the prompt dialog.
-
-If you leave out the default, the prompt will be empty by default.
+**Defaults:**  
+If you omit an attribute, the plugin uses these defaults:
+- `type='string'`
+- `default=''` (empty string)
+- `nullable=false`
 
 ## Operating principle
 
@@ -50,19 +50,19 @@ If you leave out the default, the prompt will be empty by default.
 
 ```json
 {
-  "email": "<<prompt:Please enter your email address:user@example.com>>",
-  "password": "<<prompt:Please enter your password>>"
+  "amount": "<<prompt question='Enter amount' type='number' default='42'>>",
+  "comment": "<<prompt question='Optional comment' nullable='true'>>"
 }
 ```
-On Send:
-You’ll see a dialog for each prompt, with the default value pre-filled if provided.
+
+### On Send:
+You’ll see a dialog for each prompt, with your question, default value, and type hint.
 
 ### Resulting body (sent):
-
 ```json
 {
-  "email": "user@example.com",
-  "secret": "supersecret"
+  "amount": 42,
+  "comment": null
 }
 ```
 
@@ -78,23 +78,20 @@ This is a limitation of the Insomnia plugin system: plugins cannot suppress this
 You will not get a success response or an incomplete request.
 
 ## Technical Notes
-Pattern: The plugin looks for variables matching <<prompt:Your question[:default value]>>
-
-Insomnia Version: This plugin supports Insomnia 11.x and newer (uses the async plugin API)
-
-Supported Body Types: JSON and raw text bodies.
-For other body types (form, multipart), the plugin does nothing.
-
-Do not use this plugin via the "Scripts" tab—only as a proper Insomnia plugin.
+- **Pattern:**  
+  The plugin looks for variables matching:  
+  `<<prompt question='...' [type='...'] [default='...'] [nullable='true']>>`
+- **Insomnia Version:**  
+  Supports Insomnia 11.x and newer (uses the async plugin API)
+- **Supported Body Types:**  
+  JSON and raw text bodies. For other body types (form, multipart), the plugin does nothing.
+- **Do not use this plugin via the "Scripts" tab** — only as a proper Insomnia plugin.
 
 ### Troubleshooting
-If you do not see the dialog, make sure:
 
-- You are using a POST/PUT/PATCH request with a non-empty body
-
-- The body type is set to JSON or Text (raw)
-
-- You are using the correct <<prompt:...>> syntax (not curly braces)
-
+- If you do not see the dialog, make sure:
+  - You are using a POST/PUT/PATCH request with a non-empty body
+  - The body type is set to JSON or Text (raw)
+  - You are using the correct `<<prompt ...>>` syntax (not curly braces)
 - If you cancel a prompt, the request will be aborted and an error box will appear (this is expected).
 
