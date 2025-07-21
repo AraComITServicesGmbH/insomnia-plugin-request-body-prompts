@@ -1,6 +1,6 @@
 {
   "name": "insomnia-plugin-request-body-prompts",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Prompt users for variables in your Insomnia request body (e.g. <<prompt:Question:default>>) before sending. Supports default values, and cancels on dialog abort.",
   "main": "main.js",
   "insomnia": {
