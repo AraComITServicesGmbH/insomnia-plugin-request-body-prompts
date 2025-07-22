@@ -7,7 +7,18 @@
     "name": "request-body-prompts",
     "displayName": "Request Body Prompts",
     "description": "Prompt for variables in the request body using <<prompt:Your question[:default value]>> before sending a request.",
-    "icon": "./images/icon.svg"
+    "images": {
+      "icon": "images/icon.svg"
+    },
+    "publisher": {
+      "name": "Christian Ego",
+      "icon": "https://avatars.githubusercontent.com/u/757762?s=250"
+    },
+    "applications": {
+      "designer": "*",
+      "core": "*",
+      "cli": "*"
+    }
   },
   "keywords": [
     "insomnia",
